@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  stats-db:
+  stats-db_l1:
     image: postgres:14
     restart: always
-    container_name: 'stats-postgres'
+    container_name: 'stats-postgres_l1'
     command: postgres -c 'max_connections=200'
     environment:
         POSTGRES_PASSWORD: ''
@@ -15,18 +15,18 @@ services:
     volumes:
       - ./stats-db-data:/var/lib/postgresql/data/
 
-  stats:
+  stats_l1:
     image: ghcr.io/blockscout/stats:${STATS_DOCKER_TAG:-latest}
     pull_policy: always
     platform: linux/amd64
     restart: always
-    container_name: 'stats'
+    container_name: 'stats_l1'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     env_file:
       -  ../envs/common-stats.env
     environment:
-      - STATS__DB_URL=postgres://postgres:@stats-db:5432/stats
+      - STATS__DB_URL=postgres://postgres:@stats-db_l1:5432/stats
       - STATS__BLOCKSCOUT_DB_URL=postgresql://postgres:@host.docker.internal:7432/blockscout?ssl=false
       - STATS__CREATE_DATABASE=true
       - STATS__RUN_MIGRATIONS=true

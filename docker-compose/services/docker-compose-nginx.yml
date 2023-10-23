@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  proxy:
+  proxy_l1:
     image: nginx
-    container_name: proxy
+    container_name: proxy_l1
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     volumes:
       - "../proxy:/etc/nginx/templates"
     environment:
-      BACK_PROXY_PASS: ${BACK_PROXY_PASS:-http://backend:4000}
-      FRONT_PROXY_PASS: ${FRONT_PROXY_PASS:-http://frontend:3000}
+      BACK_PROXY_PASS: ${BACK_PROXY_PASS:-http://backend_l1:4000}
+      FRONT_PROXY_PASS: ${FRONT_PROXY_PASS:-http://frontend_l1:3000}
     ports:
       - 80:80
       - 8080:8080

@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  redis_db:
+  redis_db_l1:
     image: 'redis:alpine'
     ports:
       - 6379:6379
-    container_name: redis_db
+    container_name: redis_db_l1
     command: redis-server
     volumes:
       - ./redis-data:/data
