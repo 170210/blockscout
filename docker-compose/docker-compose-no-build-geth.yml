@@ -79,11 +79,12 @@ services:
     extends:
       file: ./services/docker-compose-stats.yml
       service: stats_l2
-  # proxy_l2:
-  #   depends_on:
-  #     - backend_l2
-  #     - frontend_l2
-  #     - stats_l2
-  #   extends:
-  #     file: ./services/docker-compose-nginx.yml
-  #     service: proxy_l2
+
+  proxy_l2:
+    depends_on:
+      - backend_l2
+      - frontend_l2
+      - stats_l2
+    extends:
+      file: ./services/docker-compose-nginx.yml
+      service: proxy_l2
